@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from '../pages/Login'
-import SigIn from '../pages/SigIn'
+import SigIn from '../pages/Register'
 
 export type ParamsListSigInRoutes = {
   Login: undefined

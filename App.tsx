@@ -1,12 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
-import {View, Text} from 'react-native'
-import Login from './src/pages/Login';
-import SigInRoutes from './src/routes/SigIn.routes';
+import { StatusBar } from 'expo-status-bar';
+import { AuthProvider } from './src/context/AuthContextUser';
+import Routes from './src/routes';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <SigInRoutes />
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <StatusBar backgroundColor='#000' style='light' translucent={false} />
+        <Routes />
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
