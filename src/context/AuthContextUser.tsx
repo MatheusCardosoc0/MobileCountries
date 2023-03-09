@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { Country } from "../@types/interfaces/CountryInterface";
 import { api } from "../services/axiosConfig";
 
 type userProps = {
@@ -14,6 +15,10 @@ type initialState = {
   signIn: (email: string, password: string) => Promise<void>
   Register: (email: string, name: string, password: string) => Promise<void>
   isAuthenticated: boolean
+  setCountry: React.Dispatch<React.SetStateAction<Country[]>>
+  country: Country[]
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const AuthContext = createContext({} as initialState)
@@ -21,6 +26,8 @@ const AuthContext = createContext({} as initialState)
 export function AuthProvider({ children }: { children: ReactNode }) {
 
   const [user, setUser] = useState({} as userProps)
+  const [country, setCountry] = useState<Country[]>([])
+  const [loading, setLoading] = useState(false)
 
   const isAuthenticated = !!user.name
 
@@ -35,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email,
         id,
         name,
-        token
+        token,
       })
     }
 
@@ -72,7 +79,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function Register(email: string,  name: string, password: string) {
+  async function Register(email: string, name: string, password: string) {
 
     try {
       await api.post('/register', {
@@ -93,7 +100,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       Register,
       signIn,
-      isAuthenticated
+      isAuthenticated,
+      country,
+      setCountry,
+      loading,
+      setLoading
     }}>
       {children}
     </AuthContext.Provider>
