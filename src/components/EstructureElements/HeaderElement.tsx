@@ -28,7 +28,7 @@ const HeaderElement = () => {
       const DisignedOrderBy = Order(response.data)
 
       if (search == '') {
-        setCountry(DisignedOrderBy.slice(0, 21))
+        setCountry(DisignedOrderBy.slice(0, 12))
         setIsFilterActivate(false)
       } else {
         setCountry(FilterCountries)

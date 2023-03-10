@@ -22,7 +22,7 @@ const Main = () => {
       const OrdenedBy = Order(response.data)
 
 
-      setCountry(OrdenedBy.slice(0 + 21 * (countryListNumber - 1), 21 * countryListNumber))
+      setCountry(OrdenedBy.slice(0 + 12 * (countryListNumber - 1), 12 * countryListNumber))
 
       if (countryListNumber <= 1) {
         setcountryListNumber(1)

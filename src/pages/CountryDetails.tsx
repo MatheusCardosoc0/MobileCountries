@@ -54,8 +54,8 @@ const CountryDetails = () => {
         <View className={`${isWhiteMode? 'bg-white': 'bg-black'} w-[90%] rounded-xl items-center px-4 py-6 mx-auto mb-20`}>
           <View>
             <Image source={{ uri: country.flags.png }}
-              style={{ width: 260, height: 260 }}
-              className="rounded-xl" />
+              style={{ width: 300, height: 220 }}
+              className="rounded-xl mx-auto" />
 
             <Text className={`text-2xl ${color} font-bold my-2`}>
               {country.name.official}
