@@ -12,15 +12,17 @@ const Main = () => {
 
 
   const [countryListNumber, setcountryListNumber] = useState(1)
-  const { country, setCountry, setLoading, loading, isFilterActivate } = useDataContext()
+  const { country, setCountry, setLoading, loading, isFilterActivate, Order, isWhiteMode } = useDataContext()
 
   async function GetCountries(isAvanced = true) {
     setLoading(true)
     try {
       const response = await countryApi.get('/all')
 
+      const OrdenedBy = Order(response.data)
 
-      setCountry(response.data.slice(0 + 12 * (countryListNumber - 1), 12 * countryListNumber))
+
+      setCountry(OrdenedBy.slice(0 + 21 * (countryListNumber - 1), 21 * countryListNumber))
 
       if (countryListNumber <= 1) {
         setcountryListNumber(1)
@@ -58,27 +60,10 @@ const Main = () => {
       GetCountries()
     }
   }, [])
-  /*
-
-  const renderizarLinguas = () => {
-    const elementosTexto: JSX.Element[] = [];
-
-    for (const linguagem in country[2].languages) {
-      elementosTexto.push(
-        <View key={linguagem}>
-          <Text>Língua: {linguagem}</Text>
-          <Text>Escrita: {country[2].languages[linguagem]}</Text>
-        </View>
-      );
-    }
-
-    return elementosTexto;
-  };
-  */
 
 
   return (
-    <View className='bg-zinc-600'>
+    <View className={`h-full ${isWhiteMode? 'bg-zinc-300': 'bg-zinc-600'}`}>
       <HeaderElement />
 
       <ScrollView className='' contentContainerStyle={{ paddingBottom: 200 }}>

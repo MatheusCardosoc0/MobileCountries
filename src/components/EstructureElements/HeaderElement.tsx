@@ -10,7 +10,7 @@ import ModalPicker from './ModalPicker'
 const HeaderElement = () => {
 
   const [search, setSearch] = useState('')
-  const { country, setCountry, setLoading, setIsFilterActivate, Order, orderBy, setOrderBy } = useDataContext()
+  const { country, setCountry, setLoading, setIsFilterActivate, Order, orderBy, setOrderBy, setIsWhiteMode, isWhiteMode } = useDataContext()
   const [visbleModal, setVisibleModal] = useState(false)
   const [currentFilterRegion, setCurrentFilterRegion] = useState('')
   const [typeModal, setTypeModal] = useState<'OrderBy' | 'Region'>('Region')
@@ -28,7 +28,7 @@ const HeaderElement = () => {
       const DisignedOrderBy = Order(response.data)
 
       if (search == '') {
-        setCountry(DisignedOrderBy.slice(0, 12))
+        setCountry(DisignedOrderBy.slice(0, 21))
         setIsFilterActivate(false)
       } else {
         setCountry(FilterCountries)
@@ -77,37 +77,40 @@ const HeaderElement = () => {
   
 
   return (
-    <View className='flex-row justify-between p-[3%] bg-zinc-900 items-center'>
+    <View className={`flex-row justify-between p-[3%] items-center ${isWhiteMode? 'bg-gray-400' : 'bg-zinc-900'}`}>
       <View>
-        <Text className='text-white text-2xl font-bold mb-4'>
+        <Text className={`text-2xl font-bold mb-4 ${isWhiteMode? 'text-black': 'text-white'}`}>
           Galery Countries
         </Text>
 
         <View className='flex-row gap-[5%]'>
-          <TouchableOpacity className='bg-white p-1 items-center justify-center rounded-lg'
+          <TouchableOpacity className={`${isWhiteMode? 'bg-black': 'bg-white'} p-1 items-center justify-center rounded-lg`}
             onPress={() => VisibleModalAndSetType("Region")}>
-            <Text className='font-bold'>
+            <Text className={`font-bold ${isWhiteMode? 'text-white' : 'text-black'}`}>
               {currentFilterRegion || 'Todos'}
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className='bg-white p-1 items-center justify-center rounded-lg'
+          <TouchableOpacity className={`${isWhiteMode? 'bg-black': 'bg-white'} p-1 items-center justify-center rounded-lg`}
             onPress={() => VisibleModalAndSetType("OrderBy")}>
-            <Text className='font-bold'>
+            <Text className={`font-bold ${isWhiteMode? 'text-white' : 'text-black'}`}>
               {orderBy || 'Nenhum'}
             </Text>
           </TouchableOpacity>
 
         </View>
-        <Input stylish='bg-white w-[100%] mt-2 p-1 text-black font-bold'
+        <Input stylish='w-[100%] mt-2 p-1 font-bold'
           placeholder='Buscar...'
-          placeholderTextColor={"#736c6c"}
           onChangeText={setSearch} />
       </View>
 
-      <TouchableOpacity className='bg-white p-[4%] rounded-xl items-center'>
-        <Ionicons name='md-sunny' size={34} />
-        <Text className='font-bold'>white mode</Text>
+      <TouchableOpacity className={` p-[4%] rounded-xl items-center ${isWhiteMode? 'bg-black': 'bg-white'}`}
+      onPress={() => setIsWhiteMode(prev => !prev)}>
+        <Ionicons name={isWhiteMode? 'moon' : 'md-sunny'} size={34}
+        color={isWhiteMode? "#ffffff" : "#000"} />
+        <Text className={`font-bold ${isWhiteMode? 'text-white': 'text-black'}`}>
+          {isWhiteMode? 'dark mode' : 'white mode'}
+        </Text>
       </TouchableOpacity>
 
 

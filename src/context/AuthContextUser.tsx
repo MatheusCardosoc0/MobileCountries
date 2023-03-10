@@ -24,6 +24,8 @@ type initialState = {
   setOrderBy: React.Dispatch<React.SetStateAction<string>>
   orderBy: string
   Order(response: Country[]): Country[]
+  setIsWhiteMode: React.Dispatch<React.SetStateAction<boolean>>
+  isWhiteMode: boolean
 }
 
 const AuthContext = createContext({} as initialState)
@@ -35,6 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false)
   const [isFilterActivate, setIsFilterActivate] = useState(false)
   const [orderBy, setOrderBy] = useState<string>('')
+  const [isWhiteMode, setIsWhiteMode] = useState(false)
 
   const isAuthenticated = !!user.name
 
@@ -141,7 +144,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsFilterActivate,
       orderBy,
       setOrderBy,
-      Order
+      Order,
+      isWhiteMode,
+      setIsWhiteMode
     }}>
       {children}
     </AuthContext.Provider>
