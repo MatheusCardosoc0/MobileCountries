@@ -10,9 +10,9 @@ import { useDataContext } from '../context/AuthContextUser'
 
 const Main = () => {
 
-  
+
   const [countryListNumber, setcountryListNumber] = useState(1)
-  const {country, setCountry, setLoading, loading} = useDataContext()
+  const { country, setCountry, setLoading, loading, isFilterActivate } = useDataContext()
 
   async function GetCountries(isAvanced = true) {
     setLoading(true)
@@ -22,7 +22,7 @@ const Main = () => {
 
       setCountry(response.data.slice(0 + 12 * (countryListNumber - 1), 12 * countryListNumber))
 
-      if(countryListNumber <= 1){
+      if (countryListNumber <= 1) {
         setcountryListNumber(1)
       }
 
@@ -54,7 +54,7 @@ const Main = () => {
   }
 
   useEffect(() => {
-    if(country.length == 0){
+    if (country.length == 0) {
       GetCountries()
     }
   }, [])
@@ -95,18 +95,22 @@ const Main = () => {
             </View>
           </View>
         )}
-        <View className="mx-auto mt-12 flex-row items-center">
-          <TouchableOpacity onPress={ReturnListNumberCountry}>
-            <AntDesign name="caretleft" size={40} />
-          </TouchableOpacity>
-          <Input value={(countryListNumber - 1).toString()}
-            stylish={"text-center font-bold"}
-            keyboardType={"numeric"}
-            onChangeText={converToString} />
-          <TouchableOpacity onPress={AvancedListNumberCountry}>
-            <AntDesign name="caretright" size={40} />
-          </TouchableOpacity>
-        </View>
+
+        {!isFilterActivate && (
+          <View className="mx-auto mt-12 flex-row items-center">
+            <TouchableOpacity onPress={ReturnListNumberCountry}
+              disabled={countryListNumber <= 1}>
+              <AntDesign name="caretleft" size={40} />
+            </TouchableOpacity>
+            <Input value={(countryListNumber).toString()}
+              stylish={"text-center font-bold"}
+              keyboardType={"decimal-pad"}
+              onChangeText={converToString} />
+            <TouchableOpacity onPress={AvancedListNumberCountry}>
+              <AntDesign name="caretright" size={40} />
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
 
 

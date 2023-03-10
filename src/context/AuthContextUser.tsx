@@ -19,6 +19,11 @@ type initialState = {
   country: Country[]
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsFilterActivate: React.Dispatch<React.SetStateAction<boolean>>
+  isFilterActivate: boolean
+  setOrderBy: React.Dispatch<React.SetStateAction<string>>
+  orderBy: string
+  Order(response: Country[]): Country[]
 }
 
 const AuthContext = createContext({} as initialState)
@@ -28,6 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState({} as userProps)
   const [country, setCountry] = useState<Country[]>([])
   const [loading, setLoading] = useState(false)
+  const [isFilterActivate, setIsFilterActivate] = useState(false)
+  const [orderBy, setOrderBy] = useState<string>('')
 
   const isAuthenticated = !!user.name
 
@@ -94,6 +101,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  function Order(response: Country[]) {
+    if (orderBy == "Maior população") {
+      const ordened = response.sort((a, b) => b.population - a.population)
+
+      return ordened
+
+    } else if (orderBy == "Menor população") {
+      const ordened = response.sort((a, b) => a.population - b.population)
+
+      return ordened
+
+    } else if (orderBy == "Maior territorio") {
+      const ordened = response.sort((a, b) => b.area - a.area)
+
+      return ordened
+
+    } else if (orderBy == "Menor territorio"){
+      const ordened = response.sort((a, b) =>  a.area - b.area)
+
+      return ordened
+    } else {
+      return response
+    }
+  }
+
 
   return (
     <AuthContext.Provider value={{
@@ -104,7 +136,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       country,
       setCountry,
       loading,
-      setLoading
+      setLoading,
+      isFilterActivate,
+      setIsFilterActivate,
+      orderBy,
+      setOrderBy,
+      Order
     }}>
       {children}
     </AuthContext.Provider>
